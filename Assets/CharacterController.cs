@@ -9,19 +9,22 @@ public class CharacterController : MonoBehaviour
     float rotation = 0.0f;
     float camRotation = 0.0f;
     float rotationSpeed = 2.0f;
-    float camRotationSpeed = 1.5f;s
+    float camRotationSpeed = 1.5f;
     GameObject cam;
+    Rigidbody myRigidbody;
 
     // Start is called before the first frame update
     void Start()
     {
         cam = GameObject.Find("Main Camera");
+        myRigidbody = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        transform.position = transform.position + (transform.forward * Input.GetAxis("Vertical") * maxSpeed);
+        Vector3 newVelocity = transform.forward * Input.GetAxis("Vertical") * maxSpeed;
+        myRigidbody.velocity = new Vector3(newVelocity.x, myRigidbody.velocity.y, newVelocity.z);
 
         rotation = rotation + Input.GetAxis("Mouse X");
         transform.rotation = Quaternion.Euler(new Vector3(0.0f, rotation, 0.0f));
